@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.expedia.adaptivealerting.anomdetect.source;
+package com.expedia.adaptivealerting.anomdetect.detect;
 
+import com.expedia.adaptivealerting.anomdetect.detect.DetectorDocument;
+import com.expedia.adaptivealerting.anomdetect.detect.DetectorException;
+import com.expedia.adaptivealerting.anomdetect.detect.DetectorRegistry;
+import com.expedia.adaptivealerting.anomdetect.detect.breakout.algo.edmx.EdmxDetectorFactory;
 import com.expedia.adaptivealerting.anomdetect.detect.outlier.algo.constant.ConstantThresholdDetectorFactory;
 import com.expedia.adaptivealerting.anomdetect.detect.outlier.algo.cusum.CusumDetectorFactory;
-import com.expedia.adaptivealerting.anomdetect.detect.breakout.algo.edmx.EdmxDetectorFactory;
 import com.expedia.adaptivealerting.anomdetect.detect.outlier.algo.individuals.IndividualsDetectorFactory;
-import com.expedia.adaptivealerting.anomdetect.detect.outlier.algo.forecasting.LegacyEwmaDetectorFactory;
-import com.expedia.adaptivealerting.anomdetect.detect.outlier.algo.forecasting.LegacyHoltWintersDetectorFactory;
-import com.expedia.adaptivealerting.anomdetect.detect.outlier.algo.forecasting.LegacyPewmaDetectorFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.val;
 import org.junit.Before;
@@ -58,24 +58,6 @@ public class DetectorRegistryTest {
     @Test
     public void testGetDetectorFactory_individuals() {
         testGetDetectorFactory("individuals", IndividualsDetectorFactory.class);
-    }
-
-    @Test
-    @Deprecated // underlying factory is deprecated
-    public void testGetDetectorFactory_legacyEwma() {
-        testGetDetectorFactory("ewma", LegacyEwmaDetectorFactory.class);
-    }
-
-    @Test
-    @Deprecated // underlying factory is deprecated
-    public void testGetDetectorFactory_legacyHoltWinters() {
-        testGetDetectorFactory("holt-winters", LegacyHoltWintersDetectorFactory.class);
-    }
-
-    @Test
-    @Deprecated // underlying factory is deprecated
-    public void testGetDetectorFactory_legacyPewma() {
-        testGetDetectorFactory("pewma", LegacyPewmaDetectorFactory.class);
     }
 
     @Test(expected = IllegalArgumentException.class)

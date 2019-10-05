@@ -2,9 +2,9 @@ package com.expedia.adaptivealerting.modelservice.service;
 
 import com.expedia.adaptivealerting.anomdetect.detect.outlier.OutlierDetectorResult;
 import com.expedia.adaptivealerting.anomdetect.detect.Detector;
-import com.expedia.adaptivealerting.anomdetect.source.DetectorDocument;
-import com.expedia.adaptivealerting.anomdetect.source.DetectorFactory;
-import com.expedia.adaptivealerting.anomdetect.source.DetectorRegistry;
+import com.expedia.adaptivealerting.anomdetect.detect.DetectorDocument;
+import com.expedia.adaptivealerting.anomdetect.detect.DetectorFactory;
+import com.expedia.adaptivealerting.anomdetect.detect.DetectorRegistry;
 import com.expedia.adaptivealerting.modelservice.providers.graphite.GraphiteMetricSource;
 import com.expedia.adaptivealerting.modelservice.spi.MetricSource;
 import com.expedia.adaptivealerting.modelservice.spi.MetricSourceResult;

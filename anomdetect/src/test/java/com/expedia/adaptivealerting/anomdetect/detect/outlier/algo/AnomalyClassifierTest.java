@@ -16,8 +16,8 @@
 package com.expedia.adaptivealerting.anomdetect.detect.outlier.algo;
 
 import com.expedia.adaptivealerting.anomdetect.detect.AnomalyLevel;
-import com.expedia.adaptivealerting.anomdetect.detect.AnomalyThresholds;
-import com.expedia.adaptivealerting.anomdetect.detect.AnomalyType;
+import com.expedia.adaptivealerting.anomdetect.detect.outlier.OutlierThresholds;
+import com.expedia.adaptivealerting.anomdetect.detect.outlier.OutlierType;
 import lombok.val;
 import org.junit.Assert;
 import org.junit.Before;
@@ -32,9 +32,9 @@ public class AnomalyClassifierTest {
 
     @Before
     public void setUp() {
-        this.classifierUnderTest_leftTailed = new AnomalyClassifier(AnomalyType.LEFT_TAILED);
-        this.classifierUnderTest_rightTailed = new AnomalyClassifier(AnomalyType.RIGHT_TAILED);
-        this.classifierUnderTest_twoTailed = new AnomalyClassifier(AnomalyType.TWO_TAILED);
+        this.classifierUnderTest_leftTailed = new AnomalyClassifier(OutlierType.LEFT_TAILED);
+        this.classifierUnderTest_rightTailed = new AnomalyClassifier(OutlierType.RIGHT_TAILED);
+        this.classifierUnderTest_twoTailed = new AnomalyClassifier(OutlierType.TWO_TAILED);
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -44,7 +44,7 @@ public class AnomalyClassifierTest {
 
     @Test
     public void testUpperThresholds() {
-        val thresholds = new AnomalyThresholds(100.0, 50.0, null, null);
+        val thresholds = new OutlierThresholds(100.0, 50.0, null, null);
 
         Assert.assertEquals(AnomalyLevel.NORMAL, classifierUnderTest_leftTailed.classify(thresholds, 150.0));
         assertEquals(AnomalyLevel.NORMAL, classifierUnderTest_leftTailed.classify(thresholds, 75.0));
@@ -61,7 +61,7 @@ public class AnomalyClassifierTest {
 
     @Test
     public void testLowerThresholds() {
-        val thresholds = new AnomalyThresholds(null, null, 50.0, 25.0);
+        val thresholds = new OutlierThresholds(null, null, 50.0, 25.0);
 
         assertEquals(AnomalyLevel.STRONG, classifierUnderTest_leftTailed.classify(thresholds, 0.0));
         assertEquals(AnomalyLevel.WEAK, classifierUnderTest_leftTailed.classify(thresholds, 35.0));

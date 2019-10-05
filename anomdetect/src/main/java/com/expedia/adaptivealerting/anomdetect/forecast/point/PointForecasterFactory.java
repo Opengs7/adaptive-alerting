@@ -13,7 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.expedia.adaptivealerting.anomdetect.detect;
+package com.expedia.adaptivealerting.anomdetect.forecast.point;
 
-public interface DetectorTrainer {
+/**
+ * Point forecaster factory.
+ *
+ * @param <T> Point forecaster.
+ */
+public interface PointForecasterFactory<T extends PointForecaster> {
+
+    T build();
 }

@@ -23,6 +23,7 @@ import lombok.val;
 import org.junit.Test;
 
 import java.util.Random;
+import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -30,7 +31,7 @@ import static org.junit.Assert.assertNull;
 public class NaivePointForecasterTest {
     private static final double TOLERANCE = 0.001;
 
-    private NaivePointForecaster forecasterUnderTest = new NaivePointForecaster();
+    private NaivePointForecaster forecasterUnderTest = new NaivePointForecaster(UUID.randomUUID());
     private Random random = new Random();
     private MetricDefinition metricDef = new MetricDefinition("some-key");
 

@@ -13,35 +13,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.expedia.adaptivealerting.anomdetect.detect.outlier.algo.constant;
+package com.expedia.adaptivealerting.anomdetect.util;
 
-import com.expedia.adaptivealerting.anomdetect.util.AlgoParams;
-import com.expedia.adaptivealerting.anomdetect.detect.outlier.OutlierThresholds;
-import com.expedia.adaptivealerting.anomdetect.detect.outlier.OutlierType;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import static com.expedia.adaptivealerting.anomdetect.util.AssertUtil.notNull;
+import java.util.Date;
 
+/**
+ * Component metadata.
+ */
 @Data
 @Accessors(chain = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ConstantThresholdDetectorParams implements AlgoParams {
+public class DocumentMeta {
 
     /**
-     * Detector type: left-, right- or two-tailed.
+     * Date the component was created.
      */
-    private OutlierType type;
+    private Date dateCreated;
 
     /**
-     * Constant thresholds.
+     * Date the component was most recently updated.
      */
-    private OutlierThresholds thresholds;
+    private Date dateUpdated;
 
-    @Override
-    public void validate() {
-        notNull(type, "type can't be null");
-        notNull(thresholds, "thresholds can't be null");
-    }
+    /**
+     * Free-text indicating who or what created the component. For instance this could be a specific model trainer.
+     */
+    private String createdBy;
+
+    /**
+     * Who or what most recently updated the component.
+     */
+    private String updatedBy;
 }

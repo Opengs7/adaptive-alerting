@@ -16,7 +16,7 @@
 package com.expedia.adaptivealerting.anomdetect.util;
 
 import com.expedia.adaptivealerting.anomdetect.detect.outlier.OutlierDetectorResult;
-import com.expedia.adaptivealerting.anomdetect.detect.AnomalyThresholds;
+import com.expedia.adaptivealerting.anomdetect.detect.outlier.OutlierThresholds;
 import lombok.val;
 import org.junit.Test;
 
@@ -32,7 +32,7 @@ public class ReflectionUtilTest {
 
     @Test(expected = RuntimeException.class)
     public void testNewInstance_instantiationException() {
-        // This generates an InstantiationException because AnomalyThresholds lacks a noarg constructor.
-        ReflectionUtil.newInstance(AnomalyThresholds.class);
+        // This generates an InstantiationException because OutlierThresholds lacks a noarg constructor.
+        ReflectionUtil.newInstance(OutlierThresholds.class);
     }
 }

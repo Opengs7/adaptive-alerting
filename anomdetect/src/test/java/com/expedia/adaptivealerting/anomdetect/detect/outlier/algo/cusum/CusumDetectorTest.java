@@ -17,7 +17,7 @@ package com.expedia.adaptivealerting.anomdetect.detect.outlier.algo.cusum;
 
 import com.expedia.adaptivealerting.anomdetect.detect.AnomalyLevel;
 import com.expedia.adaptivealerting.anomdetect.detect.outlier.OutlierDetectorResult;
-import com.expedia.adaptivealerting.anomdetect.detect.AnomalyType;
+import com.expedia.adaptivealerting.anomdetect.detect.outlier.OutlierType;
 import com.expedia.metrics.MetricData;
 import com.expedia.metrics.MetricDefinition;
 import com.opencsv.bean.CsvToBeanBuilder;
@@ -60,7 +60,7 @@ public class CusumDetectorTest {
 
     @Test
     public void testClassify_leftTailed() {
-        val anomalyType = AnomalyType.LEFT_TAILED;
+        val anomalyType = OutlierType.LEFT_TAILED;
 
         val params = new CusumDetectorParams()
                 .setType(anomalyType)
@@ -85,7 +85,7 @@ public class CusumDetectorTest {
         val testRows = data.listIterator();
         val testRow0 = testRows.next();
 
-        val anomalyType = AnomalyType.RIGHT_TAILED;
+        val anomalyType = OutlierType.RIGHT_TAILED;
 
         val params = new CusumDetectorParams()
                 .setType(anomalyType)
@@ -121,7 +121,7 @@ public class CusumDetectorTest {
 
     @Test
     public void testClassify_twoTailed() {
-        val anomalyType = AnomalyType.TWO_TAILED;
+        val anomalyType = OutlierType.TWO_TAILED;
 
         val params = new CusumDetectorParams()
                 .setType(anomalyType)
@@ -142,7 +142,7 @@ public class CusumDetectorTest {
         testClassify(params, anomalyType, testRows);
     }
 
-    private void testClassify(CusumDetectorParams params, AnomalyType anomalyType, CusumDetectorTestRow[] testRows) {
+    private void testClassify(CusumDetectorParams params, OutlierType outlierType, CusumDetectorTestRow[] testRows) {
         val detector = new CusumDetector(detectorUuid, params);
         assertEquals(detectorUuid, detector.getUuid());
         assertSame(params, detector.getParams());

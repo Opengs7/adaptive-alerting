@@ -15,7 +15,7 @@
  */
 package com.expedia.adaptivealerting.modelservice.web;
 
-import com.expedia.adaptivealerting.anomdetect.source.DetectorDocument;
+import com.expedia.adaptivealerting.anomdetect.detect.DetectorDocument;
 import com.expedia.adaptivealerting.modelservice.service.DetectorService;
 import com.expedia.adaptivealerting.modelservice.util.RequestValidator;
 import lombok.val;

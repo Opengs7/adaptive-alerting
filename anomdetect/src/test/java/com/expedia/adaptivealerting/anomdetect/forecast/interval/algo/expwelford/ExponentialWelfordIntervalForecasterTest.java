@@ -31,6 +31,7 @@ import org.junit.Test;
 import java.io.InputStreamReader;
 import java.time.Instant;
 import java.util.List;
+import java.util.UUID;
 
 import static org.junit.Assert.assertEquals;
 
@@ -55,7 +56,7 @@ public class ExponentialWelfordIntervalForecasterTest {
                 .setWeakSigmas(3.0)
                 .setStrongSigmas(4.0);
         params.validate();
-        this.forecasterUnderTest = new ExponentialWelfordIntervalForecaster(params);
+        this.forecasterUnderTest = new ExponentialWelfordIntervalForecaster(UUID.randomUUID(), params);
     }
 
     @Test

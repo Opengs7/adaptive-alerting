@@ -16,7 +16,7 @@
 package com.expedia.adaptivealerting.anomdetect.detect.outlier.algo.cusum;
 
 import com.expedia.adaptivealerting.anomdetect.util.AlgoParams;
-import com.expedia.adaptivealerting.anomdetect.detect.AnomalyType;
+import com.expedia.adaptivealerting.anomdetect.detect.outlier.OutlierType;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -61,7 +61,7 @@ public class CusumDetectorParams implements AlgoParams {
      * Detector type: left-, right- or two-tailed.
      */
     // FIXME This should be a detector config
-    private AnomalyType type;
+    private OutlierType type;
 
     /**
      * Minimum number of data points required before this anomaly detector is available for use.

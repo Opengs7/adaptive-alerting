@@ -19,7 +19,11 @@ import com.expedia.adaptivealerting.anomdetect.forecast.interval.IntervalForecas
 import com.expedia.adaptivealerting.anomdetect.forecast.interval.IntervalForecaster;
 import com.expedia.metrics.MetricData;
 import lombok.Getter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.val;
+
+import java.util.UUID;
 
 import static com.expedia.adaptivealerting.anomdetect.util.AssertUtil.notNull;
 
@@ -39,17 +43,22 @@ import static com.expedia.adaptivealerting.anomdetect.util.AssertUtil.notNull;
 public class ExponentialWelfordIntervalForecaster implements IntervalForecaster {
 
     @Getter
+    private UUID uuid;
+
+    @Getter
     private ExponentialWelfordIntervalForecasterParams params;
 
     @Getter
     private double variance;
 
     public ExponentialWelfordIntervalForecaster() {
-        this(new ExponentialWelfordIntervalForecasterParams());
+        this(UUID.randomUUID(), new ExponentialWelfordIntervalForecasterParams());
     }
 
-    public ExponentialWelfordIntervalForecaster(ExponentialWelfordIntervalForecasterParams params) {
+    public ExponentialWelfordIntervalForecaster(UUID uuid, ExponentialWelfordIntervalForecasterParams params) {
+        notNull(uuid, "uuid can't be null");
         notNull(params, "params can't be null");
+        this.uuid = uuid;
         this.params = params;
         this.variance = params.getInitVarianceEstimate();
     }

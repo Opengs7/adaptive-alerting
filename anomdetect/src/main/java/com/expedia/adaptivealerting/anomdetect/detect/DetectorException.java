@@ -15,20 +15,13 @@
  */
 package com.expedia.adaptivealerting.anomdetect.detect;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.val;
+public class DetectorException extends RuntimeException {
 
-import java.io.IOException;
+    public DetectorException(String message) {
+        super(message);
+    }
 
-public abstract class AbstractDetectorFactoryTest {
-    private final ObjectMapper objectMapper = new ObjectMapper();
-
-    protected DetectorDocument readDocument(String name) {
-        val path = "detector-documents/" + name + ".json";
-        try {
-            return objectMapper.readValue(ClassLoader.getSystemResourceAsStream(path), DetectorDocument.class);
-        } catch (IOException e) {
-            throw new RuntimeException("Couldn't read " + path, e);
-        }
+    public DetectorException(String message, Throwable cause) {
+        super(message, cause);
     }
 }

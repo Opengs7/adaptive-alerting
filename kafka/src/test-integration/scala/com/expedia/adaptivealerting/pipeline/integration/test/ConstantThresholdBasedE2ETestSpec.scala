@@ -20,7 +20,7 @@ import java.time.Instant
 import com.expedia.adaptivealerting.anomdetect.DetectorManager
 import com.expedia.adaptivealerting.anomdetect.detect.outlier.OutlierDetectorResult
 import com.expedia.adaptivealerting.anomdetect.mapper.DetectorMapper
-import com.expedia.adaptivealerting.anomdetect.source.DetectorClient
+import com.expedia.adaptivealerting.anomdetect.detect.DetectorDocumentClient
 import com.expedia.adaptivealerting.anomdetect.util.HttpClientWrapper
 import com.expedia.adaptivealerting.kafka.{KafkaAnomalyDetectorMapper, KafkaDetectorManager}
 import com.expedia.metrics.{MetricData, MetricDefinition}

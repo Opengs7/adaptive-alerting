@@ -15,7 +15,7 @@
  */
 package com.expedia.adaptivealerting.anomdetect.detect.outlier.algo.constant;
 
-import com.expedia.adaptivealerting.anomdetect.detect.AnomalyType;
+import com.expedia.adaptivealerting.anomdetect.detect.outlier.OutlierType;
 import com.expedia.adaptivealerting.anomdetect.detect.AbstractDetectorFactoryTest;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
@@ -44,7 +44,7 @@ public class ConstantThresholdDetectorFactoryTest extends AbstractDetectorFactor
         assertNotNull(detector);
         assertEquals(ConstantThresholdDetector.class, detector.getClass());
         assertEquals("e2e290a0-d1c1-471e-9d72-79d43282cfbd", detector.getUuid().toString());
-        assertEquals(AnomalyType.RIGHT_TAILED, params.getType());
+        assertEquals(OutlierType.RIGHT_TAILED, params.getType());
         assertEquals(16666.0, thresholds.getUpperStrong(), TOLERANCE);
         assertEquals(2161.0, thresholds.getUpperWeak(), TOLERANCE);
     }

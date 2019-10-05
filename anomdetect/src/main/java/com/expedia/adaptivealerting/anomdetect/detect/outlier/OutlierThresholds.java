@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.expedia.adaptivealerting.anomdetect.detect;
+package com.expedia.adaptivealerting.anomdetect.detect.outlier;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -31,14 +31,14 @@ import static com.expedia.adaptivealerting.anomdetect.util.AssertUtil.isTrue;
  */
 @Data
 @Setter(AccessLevel.NONE)
-public class AnomalyThresholds {
+public class OutlierThresholds {
     private Double upperStrong;
     private Double upperWeak;
     private Double lowerStrong;
     private Double lowerWeak;
 
     @JsonCreator
-    public AnomalyThresholds(
+    public OutlierThresholds(
             @JsonProperty("upperStrong") Double upperStrong,
             @JsonProperty("upperWeak") Double upperWeak,
             @JsonProperty("lowerWeak") Double lowerWeak,

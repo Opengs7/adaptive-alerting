@@ -1,7 +1,7 @@
 package com.expedia.adaptivealerting.modelservice.web;
 
-import com.expedia.adaptivealerting.anomdetect.source.DetectorDocument;
-import com.expedia.adaptivealerting.anomdetect.source.DetectorException;
+import com.expedia.adaptivealerting.anomdetect.detect.DetectorDocument;
+import com.expedia.adaptivealerting.anomdetect.detect.DetectorException;
 import com.expedia.adaptivealerting.modelservice.service.DetectorService;
 import com.expedia.adaptivealerting.modelservice.test.ObjectMother;
 import lombok.extern.slf4j.Slf4j;

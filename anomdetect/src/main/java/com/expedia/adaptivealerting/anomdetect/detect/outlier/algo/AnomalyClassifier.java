@@ -16,8 +16,8 @@
 package com.expedia.adaptivealerting.anomdetect.detect.outlier.algo;
 
 import com.expedia.adaptivealerting.anomdetect.detect.AnomalyLevel;
-import com.expedia.adaptivealerting.anomdetect.detect.AnomalyThresholds;
-import com.expedia.adaptivealerting.anomdetect.detect.AnomalyType;
+import com.expedia.adaptivealerting.anomdetect.detect.outlier.OutlierThresholds;
+import com.expedia.adaptivealerting.anomdetect.detect.outlier.OutlierType;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
@@ -30,13 +30,13 @@ import static com.expedia.adaptivealerting.anomdetect.util.AssertUtil.notNull;
 public class AnomalyClassifier {
 
     @NonNull
-    private AnomalyType anomalyType;
+    private OutlierType outlierType;
 
-    public AnomalyLevel classify(AnomalyThresholds thresholds, double observed) {
+    public AnomalyLevel classify(OutlierThresholds thresholds, double observed) {
         notNull(thresholds, "thresholds can't be null");
 
-        val checkUpper = (anomalyType == AnomalyType.RIGHT_TAILED || anomalyType == AnomalyType.TWO_TAILED);
-        val checkLower = (anomalyType == AnomalyType.LEFT_TAILED || anomalyType == AnomalyType.TWO_TAILED);
+        val checkUpper = (outlierType == OutlierType.RIGHT_TAILED || outlierType == OutlierType.TWO_TAILED);
+        val checkLower = (outlierType == OutlierType.LEFT_TAILED || outlierType == OutlierType.TWO_TAILED);
 
         val upperStrong = thresholds.getUpperStrong();
         val upperWeak = thresholds.getUpperWeak();

@@ -13,11 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.expedia.adaptivealerting.anomdetect.source;
+package com.expedia.adaptivealerting.anomdetect.detect;
 
 import com.expedia.adaptivealerting.anomdetect.mapper.DetectorMapper;
 import com.expedia.adaptivealerting.anomdetect.mapper.DetectorMapping;
 import com.expedia.adaptivealerting.anomdetect.mapper.DetectorMatchResponse;
+import com.expedia.adaptivealerting.anomdetect.util.DocumentNotFoundException;
 import com.expedia.adaptivealerting.anomdetect.util.HttpClientWrapper;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -38,8 +39,8 @@ import static com.expedia.adaptivealerting.anomdetect.util.AssertUtil.notNull;
 
 /**
  * <p>
- * Connector for interacting with the Model Service. This allows the anomaly detection module to load detector documents
- * and detector mappings from the Model Service (Elasticsearch) backend.
+ * Client for managing detector documents in the Model Service. This allows the anomaly detection module to load
+ * detector documents and detector mappings.
  * </p>
  * <p>
  * For now this is just part of the {@link com.expedia.adaptivealerting.anomdetect} package as the only thing using it
@@ -49,7 +50,7 @@ import static com.expedia.adaptivealerting.anomdetect.util.AssertUtil.notNull;
  */
 @RequiredArgsConstructor
 @Slf4j
-public class DetectorClient {
+public class DetectorDocumentClient {
     static final String FIND_DOCUMENT_PATH = "/api/v2/detectors/findByUuid?uuid=%s";
     static final String FIND_UPDATED_DOCUMENTS_PATH = "/api/v2/detectors/getLastUpdatedDetectors?interval=%d";
 
@@ -88,6 +89,7 @@ public class DetectorClient {
                     ": httpMethod=GET" +
                     ", uri=" + uri +
                     ", message=" + e.getMessage();
+            // TODO Change this to IOException. See ForecasterDocumentClient.
             throw new DetectorException(message, e);
         }
 
@@ -96,11 +98,12 @@ public class DetectorClient {
             document = objectMapper.readValue(content.asBytes(), DetectorDocument.class);
         } catch (IOException e) {
             val message = "IOException while reading detector document " + uuid;
+            // TODO Change this to IOException. See ForecasterDocumentClient.
             throw new DetectorException(message, e);
         }
 
         if (document == null) {
-            throw new DetectorException("No detector document for uuid=" + uuid);
+            throw new DocumentNotFoundException("Detector not found: uuid=" + uuid);
         }
 
         return document;
@@ -166,7 +169,7 @@ public class DetectorClient {
      * Find updated detector mappings list.
      *
      * @param timeInSecs the time period in seconds
-     * @return the list of detectormappings that were modified in last since minutes
+     * @return the list of detector mappings that were modified in last since minutes
      */
     public List<DetectorMapping> findUpdatedDetectorMappings(long timeInSecs) {
         Content content;

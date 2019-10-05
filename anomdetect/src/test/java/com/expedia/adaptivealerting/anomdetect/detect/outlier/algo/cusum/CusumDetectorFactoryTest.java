@@ -15,7 +15,7 @@
  */
 package com.expedia.adaptivealerting.anomdetect.detect.outlier.algo.cusum;
 
-import com.expedia.adaptivealerting.anomdetect.detect.AnomalyType;
+import com.expedia.adaptivealerting.anomdetect.detect.outlier.OutlierType;
 import com.expedia.adaptivealerting.anomdetect.detect.AbstractDetectorFactoryTest;
 import lombok.val;
 import org.junit.Test;
@@ -44,7 +44,7 @@ public class CusumDetectorFactoryTest extends AbstractDetectorFactoryTest {
         assertEquals(120.0, params.getTargetValue(), TOLERANCE);
         assertEquals(0.8, params.getSlackParam(), TOLERANCE);
         assertEquals(110.0, params.getInitMeanEstimate(), TOLERANCE);
-        assertEquals(AnomalyType.RIGHT_TAILED, params.getType());
+        assertEquals(OutlierType.RIGHT_TAILED, params.getType());
         assertEquals(2.5, params.getWeakSigmas(), TOLERANCE);
         assertEquals(3.5, params.getStrongSigmas(), TOLERANCE);
     }

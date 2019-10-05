@@ -15,7 +15,7 @@
  */
 package com.expedia.adaptivealerting.modelservice.repo;
 
-import com.expedia.adaptivealerting.anomdetect.source.DetectorDocument;
+import com.expedia.adaptivealerting.anomdetect.detect.DetectorDocument;
 
 import java.util.List;
 

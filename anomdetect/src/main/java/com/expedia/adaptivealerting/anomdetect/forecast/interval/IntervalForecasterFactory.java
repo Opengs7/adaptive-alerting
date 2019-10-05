@@ -13,25 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.expedia.adaptivealerting.modelservice.service;
+package com.expedia.adaptivealerting.anomdetect.forecast.interval;
 
-import com.expedia.adaptivealerting.anomdetect.detect.DetectorDocument;
+/**
+ * Interval forecaster factory.
+ *
+ * @param <T> Interval forecaster.
+ */
+public interface IntervalForecasterFactory<T extends IntervalForecaster> {
 
-import java.util.List;
-
-public interface DetectorService {
-
-    String createDetector(DetectorDocument document);
-
-    void deleteDetector(String uuid);
-
-    void updateDetector(String uuid, DetectorDocument document);
-
-    DetectorDocument findByUuid(String uuid);
-
-    List<DetectorDocument> findByCreatedBy(String user);
-
-    List<DetectorDocument> getLastUpdatedDetectors(long interval);
-
-    void toggleDetector(String uuid, Boolean enabled);
+    T build();
 }

@@ -17,7 +17,7 @@ package com.expedia.adaptivealerting.anomdetect.detect.outlier.algo.individuals;
 
 import com.expedia.adaptivealerting.anomdetect.detect.AnomalyLevel;
 import com.expedia.adaptivealerting.anomdetect.detect.outlier.OutlierDetectorResult;
-import com.expedia.adaptivealerting.anomdetect.detect.AnomalyThresholds;
+import com.expedia.adaptivealerting.anomdetect.detect.outlier.OutlierThresholds;
 import com.expedia.adaptivealerting.anomdetect.detect.Detector;
 import com.expedia.adaptivealerting.anomdetect.detect.DetectorResult;
 import com.expedia.metrics.MetricData;
@@ -134,7 +134,7 @@ public final class IndividualsDetector implements Detector {
         // TODO Modify this to use AnomalyClassifier.detect() so we can get tail checks. [WLW]
 
         // Looks like currently this detector supports only a single anomaly level (strong).
-        val thresholds = new AnomalyThresholds(
+        val thresholds = new OutlierThresholds(
                 this.mean + strongDelta,
                 this.mean + strongDelta,
                 this.mean - strongDelta,

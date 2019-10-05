@@ -13,15 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.expedia.adaptivealerting.anomdetect.source;
+package com.expedia.adaptivealerting.anomdetect.util;
 
-public class DetectorException extends RuntimeException {
+public class DocumentNotFoundException extends RuntimeException {
 
-    public DetectorException(String message) {
+    public DocumentNotFoundException(String message) {
         super(message);
-    }
-
-    public DetectorException(String message, Throwable cause) {
-        super(message, cause);
     }
 }

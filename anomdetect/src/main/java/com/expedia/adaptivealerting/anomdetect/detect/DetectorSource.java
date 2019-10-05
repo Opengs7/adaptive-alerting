@@ -13,9 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.expedia.adaptivealerting.anomdetect.source;
+package com.expedia.adaptivealerting.anomdetect.detect;
 
-import com.expedia.adaptivealerting.anomdetect.detect.Detector;
 import com.expedia.adaptivealerting.anomdetect.DetectorManager;
 import com.expedia.adaptivealerting.anomdetect.mapper.DetectorMapper;
 import com.expedia.adaptivealerting.anomdetect.mapper.DetectorMapping;

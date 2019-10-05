@@ -13,26 +13,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.expedia.adaptivealerting.anomdetect.detect.outlier.algo.cusum;
+package com.expedia.adaptivealerting.anomdetect.forecast.point.algo.naive;
 
-import com.expedia.adaptivealerting.anomdetect.detect.DetectorDocument;
-import com.expedia.adaptivealerting.anomdetect.detect.DetectorFactory;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.expedia.adaptivealerting.anomdetect.forecast.ForecasterDocument;
+import com.expedia.adaptivealerting.anomdetect.forecast.point.PointForecasterFactory;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import lombok.val;
 
 @RequiredArgsConstructor
-public class CusumDetectorFactory implements DetectorFactory<CusumDetector> {
-    private final ObjectMapper objectMapper = new ObjectMapper();
+public class NaivePointForecasterFactory implements PointForecasterFactory<NaivePointForecaster> {
 
     @NonNull
-    private DetectorDocument document;
+    private ForecasterDocument document;
 
     @Override
-    public CusumDetector buildDetector() {
-        val paramsMap = document.getConfig().get("params");
-        val params = objectMapper.convertValue(paramsMap, CusumDetectorParams.class);
-        return new CusumDetector(document.getUuid(), params);
+    public NaivePointForecaster build() {
+        // A naive point forecaster doesn't have any params.
+        return new NaivePointForecaster(document.getUuid());
     }
 }

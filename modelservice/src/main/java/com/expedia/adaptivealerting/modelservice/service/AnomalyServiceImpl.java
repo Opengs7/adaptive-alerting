@@ -17,8 +17,8 @@ package com.expedia.adaptivealerting.modelservice.service;
 
 import com.expedia.adaptivealerting.anomdetect.detect.outlier.OutlierDetectorResult;
 import com.expedia.adaptivealerting.anomdetect.detect.Detector;
-import com.expedia.adaptivealerting.anomdetect.source.DetectorDocument;
-import com.expedia.adaptivealerting.anomdetect.source.DetectorRegistry;
+import com.expedia.adaptivealerting.anomdetect.detect.DetectorDocument;
+import com.expedia.adaptivealerting.anomdetect.detect.DetectorRegistry;
 import com.expedia.adaptivealerting.anomdetect.util.MetricUtil;
 import com.expedia.adaptivealerting.modelservice.spi.MetricSource;
 import lombok.extern.slf4j.Slf4j;

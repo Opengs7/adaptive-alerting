@@ -16,8 +16,8 @@
 package com.expedia.adaptivealerting.anomdetect.detect.outlier.algo.forecasting;
 
 import com.expedia.adaptivealerting.anomdetect.detect.AnomalyLevel;
-import com.expedia.adaptivealerting.anomdetect.detect.AnomalyThresholds;
-import com.expedia.adaptivealerting.anomdetect.detect.AnomalyType;
+import com.expedia.adaptivealerting.anomdetect.detect.outlier.OutlierThresholds;
+import com.expedia.adaptivealerting.anomdetect.detect.outlier.OutlierType;
 import com.expedia.adaptivealerting.anomdetect.detect.Detector;
 import com.expedia.adaptivealerting.anomdetect.detect.DetectorResult;
 import com.expedia.adaptivealerting.anomdetect.detect.outlier.AbstractOutlierDetector;
@@ -44,7 +44,7 @@ import static com.expedia.adaptivealerting.anomdetect.util.AssertUtil.notNull;
  * </p>
  * <p>
  * We actually generate two types of forecast: point and interval forecasts. These are based upon underlying
- * {@link PointForecaster} and {@link IntervalForecaster} implementations. Additionally we use {@link AnomalyType} to
+ * {@link PointForecaster} and {@link IntervalForecaster} implementations. Additionally we use {@link OutlierType} to
  * apply either a one- or two-tailed test when generating the classification.
  * </p>
  *
@@ -64,7 +64,7 @@ public final class ForecastingDetector extends AbstractOutlierDetector {
 
     @Getter
     @Generated // https://reflectoring.io/100-percent-test-coverage/
-    private AnomalyType anomalyType;
+    private OutlierType outlierType;
 
     private final AnomalyClassifier classifier;
 
@@ -72,18 +72,18 @@ public final class ForecastingDetector extends AbstractOutlierDetector {
             UUID uuid,
             PointForecaster pointForecaster,
             IntervalForecaster intervalForecaster,
-            AnomalyType anomalyType) {
+            OutlierType outlierType) {
 
         super(uuid);
 
         notNull(pointForecaster, "pointForecaster can't be null");
         notNull(intervalForecaster, "intervalForecaster can't be null");
-        notNull(anomalyType, "anomalyType can't be null");
+        notNull(outlierType, "anomalyType can't be null");
 
         this.pointForecaster = pointForecaster;
         this.intervalForecaster = intervalForecaster;
-        this.anomalyType = anomalyType;
-        this.classifier = new AnomalyClassifier(anomalyType);
+        this.outlierType = outlierType;
+        this.classifier = new AnomalyClassifier(outlierType);
     }
 
     @Override
@@ -108,8 +108,8 @@ public final class ForecastingDetector extends AbstractOutlierDetector {
                 .setThresholds(thresholds);
     }
 
-    private AnomalyThresholds toAnomalyThresholds(IntervalForecast intervalForecast) {
-        return new AnomalyThresholds(
+    private OutlierThresholds toAnomalyThresholds(IntervalForecast intervalForecast) {
+        return new OutlierThresholds(
                 intervalForecast.getUpperStrong(),
                 intervalForecast.getUpperWeak(),
                 intervalForecast.getLowerWeak(),

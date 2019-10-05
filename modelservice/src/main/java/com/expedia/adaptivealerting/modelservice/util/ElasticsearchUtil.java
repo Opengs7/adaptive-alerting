@@ -75,7 +75,12 @@ public class ElasticsearchUtil {
      * when(elasticSearchClient.indices()).thenReturn(mock(IndicesClient.class));
      * IndicesClient is final class and we can't mock it.
      * One of the solutions can be to wrap the client and hide it behind an interface which is then mockable
-     **/
+     *
+     * @param fields fields to remove
+     * @param indexName Elasticsearch index name
+     * @param docType Elasticsearch document type
+     * @return the updated set of fields
+     */
     @Generated
     public Set<String> removeFieldsHavingExistingMapping(Set<String> fields, String indexName, String docType) {
         GetMappingsRequest request = new GetMappingsRequest();

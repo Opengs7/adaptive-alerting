@@ -16,7 +16,7 @@
 package com.expedia.adaptivealerting.anomdetect.aggregate.algo;
 
 import com.expedia.adaptivealerting.anomdetect.detect.AnomalyLevel;
-import com.expedia.adaptivealerting.anomdetect.detect.AnomalyThresholds;
+import com.expedia.adaptivealerting.anomdetect.detect.outlier.OutlierThresholds;
 import com.expedia.adaptivealerting.anomdetect.detect.outlier.OutlierDetectorResult;
 import lombok.val;
 import org.junit.Before;
@@ -35,19 +35,19 @@ public final class MOfNAggregatorTest {
         this.normalResult = new OutlierDetectorResult()
                 .setAnomalyLevel(AnomalyLevel.NORMAL)
                 .setPredicted(42.2)
-                .setThresholds(new AnomalyThresholds(100.0, 90.0, 20.0, 10.0));
+                .setThresholds(new OutlierThresholds(100.0, 90.0, 20.0, 10.0));
         this.weakResult = new OutlierDetectorResult()
                 .setAnomalyLevel(AnomalyLevel.WEAK)
                 .setPredicted(95.1)
-                .setThresholds(new AnomalyThresholds(102.0, 92.0, 22.0, 12.0));
+                .setThresholds(new OutlierThresholds(102.0, 92.0, 22.0, 12.0));
         this.strongResult = new OutlierDetectorResult()
                 .setAnomalyLevel(AnomalyLevel.STRONG)
                 .setPredicted(105.8)
-                .setThresholds(new AnomalyThresholds(101.0, 91.0, 21.0, 11.0));
+                .setThresholds(new OutlierThresholds(101.0, 91.0, 21.0, 11.0));
         this.warmupResult = new OutlierDetectorResult()
                 .setAnomalyLevel(AnomalyLevel.MODEL_WARMUP)
                 .setPredicted(37.2)
-                .setThresholds(new AnomalyThresholds(103.0, 93.0, 23.0, 13.0));
+                .setThresholds(new OutlierThresholds(103.0, 93.0, 23.0, 13.0));
     }
 
     @Test

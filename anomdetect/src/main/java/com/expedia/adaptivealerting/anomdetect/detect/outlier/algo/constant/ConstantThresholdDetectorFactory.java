@@ -15,8 +15,8 @@
  */
 package com.expedia.adaptivealerting.anomdetect.detect.outlier.algo.constant;
 
-import com.expedia.adaptivealerting.anomdetect.source.DetectorDocument;
-import com.expedia.adaptivealerting.anomdetect.source.DetectorFactory;
+import com.expedia.adaptivealerting.anomdetect.detect.DetectorDocument;
+import com.expedia.adaptivealerting.anomdetect.detect.DetectorFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;

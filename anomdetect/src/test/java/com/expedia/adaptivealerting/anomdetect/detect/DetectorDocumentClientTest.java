@@ -13,10 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.expedia.adaptivealerting.anomdetect.source;
+package com.expedia.adaptivealerting.anomdetect.detect;
 
 import com.expedia.adaptivealerting.anomdetect.mapper.DetectorMapping;
 import com.expedia.adaptivealerting.anomdetect.mapper.DetectorMatchResponse;
+import com.expedia.adaptivealerting.anomdetect.util.DocumentNotFoundException;
 import com.expedia.adaptivealerting.anomdetect.util.HttpClientWrapper;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -35,10 +36,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import static com.expedia.adaptivealerting.anomdetect.source.DetectorClient.FIND_DOCUMENT_PATH;
-import static com.expedia.adaptivealerting.anomdetect.source.DetectorClient.FIND_MAPPINGS_BY_TAGS_PATH;
-import static com.expedia.adaptivealerting.anomdetect.source.DetectorClient.FIND_UPDATED_DOCUMENTS_PATH;
-import static com.expedia.adaptivealerting.anomdetect.source.DetectorClient.FIND_UPDATED_MAPPINGS_PATH;
+import static com.expedia.adaptivealerting.anomdetect.detect.DetectorDocumentClient.FIND_DOCUMENT_PATH;
+import static com.expedia.adaptivealerting.anomdetect.detect.DetectorDocumentClient.FIND_MAPPINGS_BY_TAGS_PATH;
+import static com.expedia.adaptivealerting.anomdetect.detect.DetectorDocumentClient.FIND_UPDATED_DOCUMENTS_PATH;
+import static com.expedia.adaptivealerting.anomdetect.detect.DetectorDocumentClient.FIND_UPDATED_MAPPINGS_PATH;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertSame;
@@ -47,10 +48,10 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
 
 /**
- * {@link DetectorClient} unit tests.
+ * {@link DetectorDocumentClient} unit tests.
  */
 @Slf4j
-public class DetectorClientTest {
+public class DetectorDocumentClientTest {
     private static final String BASE_URI = "http://example.com";
 
     private static final UUID DETECTOR_UUID = UUID.randomUUID();
@@ -81,7 +82,7 @@ public class DetectorClientTest {
     private static final String FIND_UPDATED_MAPPINGS_URI_NO_MAPPINGS = uri(FIND_UPDATED_MAPPINGS_PATH, TIME_PERIOD_NO_MAPPINGS);
 
 
-    private DetectorClient clientUnderTest;
+    private DetectorDocumentClient clientUnderTest;
 
     // ================================================================================
     // Dependencies
@@ -163,7 +164,7 @@ public class DetectorClientTest {
         initFindUpdatedDetectorDocuments();
         initFindMatchingDetectorMappings();
         initFindUpdatedDetectorMappings();
-        this.clientUnderTest = new DetectorClient(httpClient, BASE_URI, objectMapper);
+        this.clientUnderTest = new DetectorDocumentClient(httpClient, BASE_URI, objectMapper);
     }
 
     // ================================================================================
@@ -186,7 +187,7 @@ public class DetectorClientTest {
         clientUnderTest.findDetectorDocument(DETECTOR_UUID_CANT_READ);
     }
 
-    @Test(expected = DetectorException.class)
+    @Test(expected = DocumentNotFoundException.class)
     public void testFindDetectorDocument_noDocs() {
         clientUnderTest.findDetectorDocument(DETECTOR_UUID_NO_DOCS);
     }

@@ -13,25 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.expedia.adaptivealerting.modelservice.service;
+package com.expedia.adaptivealerting.anomdetect.detect.outlier;
 
-import com.expedia.adaptivealerting.anomdetect.detect.DetectorDocument;
+/**
+ * Anomaly Type enum.
+ */
+public enum OutlierType {
 
-import java.util.List;
+    /**
+     * Left tail. Generate alerts below the threshold.
+     */
+    LEFT_TAILED,
 
-public interface DetectorService {
+    /**
+     * Right tail. Generate alerts above the threshold.
+     */
+    RIGHT_TAILED,
 
-    String createDetector(DetectorDocument document);
+    /**
+     * Both tails. Includes both left and right tails.
+     */
+    TWO_TAILED
 
-    void deleteDetector(String uuid);
-
-    void updateDetector(String uuid, DetectorDocument document);
-
-    DetectorDocument findByUuid(String uuid);
-
-    List<DetectorDocument> findByCreatedBy(String user);
-
-    List<DetectorDocument> getLastUpdatedDetectors(long interval);
-
-    void toggleDetector(String uuid, Boolean enabled);
 }

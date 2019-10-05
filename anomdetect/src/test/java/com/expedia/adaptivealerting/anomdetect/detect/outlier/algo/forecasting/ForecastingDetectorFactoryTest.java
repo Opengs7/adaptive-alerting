@@ -13,26 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.expedia.adaptivealerting.anomdetect.detect;
+package com.expedia.adaptivealerting.anomdetect.detect.outlier.algo.forecasting;
 
-/**
- * Anomaly Type enum.
- */
-public enum AnomalyType {
-
-    /**
-     * Left tail. Generate alerts below the threshold.
-     */
-    LEFT_TAILED,
-
-    /**
-     * Right tail. Generate alerts above the threshold.
-     */
-    RIGHT_TAILED,
-
-    /**
-     * Both tails. Includes both left and right tails.
-     */
-    TWO_TAILED
-
+public class ForecastingDetectorFactoryTest {
 }

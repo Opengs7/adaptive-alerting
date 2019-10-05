@@ -16,7 +16,6 @@
 package com.expedia.adaptivealerting.anomdetect.detect.outlier;
 
 import com.expedia.adaptivealerting.anomdetect.detect.AnomalyLevel;
-import com.expedia.adaptivealerting.anomdetect.detect.AnomalyThresholds;
 import com.expedia.adaptivealerting.anomdetect.detect.DetectorResult;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Data;
@@ -45,7 +44,7 @@ public class OutlierDetectorResult implements DetectorResult {
     /**
      * Interval forecast.
      */
-    private AnomalyThresholds thresholds;
+    private OutlierThresholds thresholds;
 
     public OutlierDetectorResult(AnomalyLevel anomalyLevel) {
         this(false, anomalyLevel);

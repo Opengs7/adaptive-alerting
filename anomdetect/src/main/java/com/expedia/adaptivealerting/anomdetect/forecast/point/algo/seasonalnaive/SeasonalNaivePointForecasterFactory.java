@@ -13,28 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.expedia.adaptivealerting.anomdetect.detect.breakout.algo.edmx;
+package com.expedia.adaptivealerting.anomdetect.forecast.point.algo.seasonalnaive;
 
-import com.expedia.adaptivealerting.anomdetect.detect.DetectorDocument;
-import com.expedia.adaptivealerting.anomdetect.detect.DetectorFactory;
+import com.expedia.adaptivealerting.anomdetect.forecast.ForecasterDocument;
+import com.expedia.adaptivealerting.anomdetect.forecast.point.PointForecasterFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 
 @RequiredArgsConstructor
-public class EdmxDetectorFactory implements DetectorFactory<EdmxDetector> {
+public class SeasonalNaivePointForecasterFactory implements PointForecasterFactory<SeasonalNaivePointForecaster> {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @NonNull
-    private DetectorDocument document;
+    private ForecasterDocument document;
 
     @Override
-    public EdmxDetector buildDetector() {
-        // The EDM-X detector fits a new model with each metric point.
-        // That's why we're using hyperparameters instead of parameters here.
-        val hyperparamsMap = document.getConfig().get("hyperparams");
-        val hyperparams = objectMapper.convertValue(hyperparamsMap, EdmxHyperparams.class);
-        return new EdmxDetector(document.getUuid(), hyperparams);
+    public SeasonalNaivePointForecaster build() {
+        val paramsMap = document.getConfig().get("params");
+        val params = objectMapper.convertValue(paramsMap, SeasonalNaivePointForecasterParams.class);
+        return new SeasonalNaivePointForecaster(document.getUuid(), params);
     }
 }

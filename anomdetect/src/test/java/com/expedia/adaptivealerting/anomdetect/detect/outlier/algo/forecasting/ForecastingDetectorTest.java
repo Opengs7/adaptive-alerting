@@ -17,8 +17,7 @@ package com.expedia.adaptivealerting.anomdetect.detect.outlier.algo.forecasting;
 
 import com.expedia.adaptivealerting.anomdetect.detect.AnomalyLevel;
 import com.expedia.adaptivealerting.anomdetect.detect.outlier.OutlierDetectorResult;
-import com.expedia.adaptivealerting.anomdetect.detect.AnomalyType;
-import com.expedia.adaptivealerting.anomdetect.detect.outlier.algo.forecasting.ForecastingDetector;
+import com.expedia.adaptivealerting.anomdetect.detect.outlier.OutlierType;
 import com.expedia.adaptivealerting.anomdetect.forecast.interval.IntervalForecast;
 import com.expedia.adaptivealerting.anomdetect.forecast.interval.IntervalForecaster;
 import com.expedia.adaptivealerting.anomdetect.forecast.point.PointForecast;
@@ -51,16 +50,16 @@ public class ForecastingDetectorTest {
     private IntervalForecaster intervalForecaster;
 
     private UUID detectorUuid;
-    private AnomalyType anomalyType;
+    private OutlierType outlierType;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
         initDependencies();
         this.detectorUuid = UUID.randomUUID();
-        this.anomalyType = AnomalyType.TWO_TAILED;
+        this.outlierType = OutlierType.TWO_TAILED;
         this.detectorUnderTest =
-                new ForecastingDetector(detectorUuid, pointForecaster, intervalForecaster, anomalyType);
+                new ForecastingDetector(detectorUuid, pointForecaster, intervalForecaster, outlierType);
     }
 
     @Test
@@ -68,7 +67,7 @@ public class ForecastingDetectorTest {
         assertEquals(detectorUuid, detectorUnderTest.getUuid());
         assertEquals(pointForecaster, detectorUnderTest.getPointForecaster());
         assertEquals(intervalForecaster, detectorUnderTest.getIntervalForecaster());
-        assertEquals(anomalyType, detectorUnderTest.getAnomalyType());
+        assertEquals(outlierType, detectorUnderTest.getOutlierType());
     }
 
     @Test

@@ -13,9 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.expedia.adaptivealerting.anomdetect.source;
+package com.expedia.adaptivealerting.anomdetect.detect;
 
-import com.expedia.adaptivealerting.anomdetect.detect.Detector;
 import com.expedia.adaptivealerting.anomdetect.mapper.DetectorMapping;
 import com.expedia.adaptivealerting.anomdetect.mapper.DetectorMatchResponse;
 import lombok.NonNull;
@@ -44,7 +43,7 @@ public class DefaultDetectorSource implements DetectorSource {
      * Client to load detector documents from the Model Service.
      */
     @NonNull
-    private final DetectorClient client;
+    private final DetectorDocumentClient client;
 
     @NonNull
     private final DetectorRegistry registry;

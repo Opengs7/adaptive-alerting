@@ -13,9 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.expedia.adaptivealerting.anomdetect.source;
+package com.expedia.adaptivealerting.anomdetect.detect;
 
-import com.expedia.adaptivealerting.anomdetect.detect.Detector;
 import com.expedia.adaptivealerting.anomdetect.mapper.DetectorMapping;
 import com.expedia.adaptivealerting.anomdetect.mapper.DetectorMatchResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -48,7 +47,7 @@ public final class DefaultDetectorSourceTest {
     private DefaultDetectorSource sourceUnderTest;
 
     @Mock
-    private DetectorClient detectorClient;
+    private DetectorDocumentClient detectorDocumentClient;
 
     @Mock
     private DetectorRegistry detectorRegistry;
@@ -72,7 +71,7 @@ public final class DefaultDetectorSourceTest {
         MockitoAnnotations.initMocks(this);
         initTestObjects();
         initDependencies();
-        this.sourceUnderTest = new DefaultDetectorSource(detectorClient, detectorRegistry);
+        this.sourceUnderTest = new DefaultDetectorSource(detectorDocumentClient, detectorRegistry);
     }
 
     @Test
@@ -146,17 +145,17 @@ public final class DefaultDetectorSourceTest {
     }
 
     private void initDependencies() {
-        when(detectorClient.findMatchingDetectorMappings(any(List.class)))
+        when(detectorDocumentClient.findMatchingDetectorMappings(any(List.class)))
                 .thenReturn(detectorMatchResponse);
-        when(detectorClient.findUpdatedDetectorDocuments(1))
+        when(detectorDocumentClient.findUpdatedDetectorDocuments(1))
                 .thenReturn(Arrays.asList(updatedDetectorDocuments));
-        when(detectorClient.findDetectorDocument(DETECTOR_UUID))
+        when(detectorDocumentClient.findDetectorDocument(DETECTOR_UUID))
                 .thenReturn(detectorDocument);
-        when(detectorClient.findDetectorDocument(DETECTOR_UUID_MISSING_DETECTOR))
+        when(detectorDocumentClient.findDetectorDocument(DETECTOR_UUID_MISSING_DETECTOR))
                 .thenThrow(new DetectorException("No detectors found"));
-        when(detectorClient.findDetectorDocument(DETECTOR_UUID_EXCEPTION))
+        when(detectorDocumentClient.findDetectorDocument(DETECTOR_UUID_EXCEPTION))
                 .thenThrow(new DetectorException("Error finding latest model", new IOException()));
-        when(detectorClient.findUpdatedDetectorMappings(1))
+        when(detectorDocumentClient.findUpdatedDetectorMappings(1))
                 .thenReturn(Collections.singletonList(this.detectorMapping));
 
         when(detectorRegistry.getDetectorFactory(any(DetectorDocument.class)))

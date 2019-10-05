@@ -1,6 +1,6 @@
 package com.expedia.adaptivealerting.modelservice.test;
 
-import com.expedia.adaptivealerting.anomdetect.source.DetectorDocument;
+import com.expedia.adaptivealerting.anomdetect.detect.DetectorDocument;
 import com.expedia.adaptivealerting.modelservice.dto.common.Expression;
 import com.expedia.adaptivealerting.modelservice.dto.common.Field;
 import com.expedia.adaptivealerting.modelservice.dto.common.Operand;

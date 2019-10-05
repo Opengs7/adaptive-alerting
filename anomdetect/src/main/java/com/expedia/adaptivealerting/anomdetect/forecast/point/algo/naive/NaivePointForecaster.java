@@ -18,7 +18,12 @@ package com.expedia.adaptivealerting.anomdetect.forecast.point.algo.naive;
 import com.expedia.adaptivealerting.anomdetect.forecast.point.PointForecast;
 import com.expedia.adaptivealerting.anomdetect.forecast.point.PointForecaster;
 import com.expedia.metrics.MetricData;
+import lombok.Getter;
+import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.val;
+
+import java.util.UUID;
 
 import static com.expedia.adaptivealerting.anomdetect.util.AssertUtil.notNull;
 
@@ -29,7 +34,13 @@ import static com.expedia.adaptivealerting.anomdetect.util.AssertUtil.notNull;
  * optimal for random walk series, but they can be effective for other series as well. Accordingly, this algorithm is
  * also known as random walk forecasting.
  */
+@RequiredArgsConstructor
 public class NaivePointForecaster implements PointForecaster {
+
+    @NonNull
+    @Getter
+    private UUID uuid;
+
     private MetricData lastMetricData;
 
     @Override

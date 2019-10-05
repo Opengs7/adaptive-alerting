@@ -13,15 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.expedia.adaptivealerting.anomdetect.source;
+package com.expedia.adaptivealerting.anomdetect.detect;
 
+import com.expedia.adaptivealerting.anomdetect.detect.breakout.algo.edmx.EdmxDetectorFactory;
 import com.expedia.adaptivealerting.anomdetect.detect.outlier.algo.constant.ConstantThresholdDetectorFactory;
 import com.expedia.adaptivealerting.anomdetect.detect.outlier.algo.cusum.CusumDetectorFactory;
-import com.expedia.adaptivealerting.anomdetect.detect.breakout.algo.edmx.EdmxDetectorFactory;
+import com.expedia.adaptivealerting.anomdetect.detect.outlier.algo.forecasting.ForecastingDetectorFactory;
 import com.expedia.adaptivealerting.anomdetect.detect.outlier.algo.individuals.IndividualsDetectorFactory;
-import com.expedia.adaptivealerting.anomdetect.detect.outlier.algo.forecasting.LegacyEwmaDetectorFactory;
-import com.expedia.adaptivealerting.anomdetect.detect.outlier.algo.forecasting.LegacyHoltWintersDetectorFactory;
-import com.expedia.adaptivealerting.anomdetect.detect.outlier.algo.forecasting.LegacyPewmaDetectorFactory;
 import lombok.val;
 
 import java.util.HashMap;
@@ -36,12 +34,8 @@ public class DetectorRegistry {
         builders.put("constant-detector", document -> new ConstantThresholdDetectorFactory(document));
         builders.put("cusum-detector", document -> new CusumDetectorFactory(document));
         builders.put("edmx-detector", document -> new EdmxDetectorFactory(document));
+        builders.put("forecasting-detector", document -> new ForecastingDetectorFactory(document));
         builders.put("individuals-detector", document -> new IndividualsDetectorFactory(document));
-
-        // Legacy
-        builders.put("ewma-detector", document -> new LegacyEwmaDetectorFactory(document));
-        builders.put("holtwinters-detector", document -> new LegacyHoltWintersDetectorFactory(document));
-        builders.put("pewma-detector", document -> new LegacyPewmaDetectorFactory(document));
     }
 
     public DetectorFactory getDetectorFactory(DetectorDocument document) {

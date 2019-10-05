@@ -15,10 +15,10 @@
  */
 package com.expedia.adaptivealerting.kafka.util;
 
-import com.expedia.adaptivealerting.anomdetect.source.DefaultDetectorSource;
-import com.expedia.adaptivealerting.anomdetect.source.DetectorClient;
-import com.expedia.adaptivealerting.anomdetect.source.DetectorRegistry;
-import com.expedia.adaptivealerting.anomdetect.source.DetectorSource;
+import com.expedia.adaptivealerting.anomdetect.detect.DefaultDetectorSource;
+import com.expedia.adaptivealerting.anomdetect.detect.DetectorDocumentClient;
+import com.expedia.adaptivealerting.anomdetect.detect.DetectorRegistry;
+import com.expedia.adaptivealerting.anomdetect.detect.DetectorSource;
 import com.expedia.adaptivealerting.anomdetect.util.HttpClientWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.typesafe.config.Config;
@@ -36,7 +36,7 @@ public class DetectorUtil {
 
     public static DetectorSource buildDetectorSource(Config config) {
         val uriTemplate = config.getString(CK_MODEL_SERVICE_URI_TEMPLATE);
-        val client = new DetectorClient(new HttpClientWrapper(), uriTemplate, new ObjectMapper());
+        val client = new DetectorDocumentClient(new HttpClientWrapper(), uriTemplate, new ObjectMapper());
         val registry = new DetectorRegistry();
         return new DefaultDetectorSource(client, registry);
     }

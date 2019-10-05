@@ -16,7 +16,6 @@
 package com.expedia.adaptivealerting.anomdetect.detect.outlier;
 
 import com.expedia.adaptivealerting.anomdetect.detect.AnomalyLevel;
-import com.expedia.adaptivealerting.anomdetect.detect.AnomalyThresholds;
 import lombok.val;
 import org.junit.Test;
 
@@ -33,7 +32,7 @@ public final class OutlierDetectorResultTest {
 
         val anomalyResult2 = new OutlierDetectorResult(AnomalyLevel.STRONG);
         anomalyResult2.setPredicted(10.0);
-        anomalyResult2.setThresholds(new AnomalyThresholds(100.0, null, null, null));
+        anomalyResult2.setThresholds(new OutlierThresholds(100.0, null, null, null));
 
         assertEquals(AnomalyLevel.STRONG, anomalyResult2.getAnomalyLevel());
         assertEquals(10.0, anomalyResult2.getPredicted(), TOLERANCE);
