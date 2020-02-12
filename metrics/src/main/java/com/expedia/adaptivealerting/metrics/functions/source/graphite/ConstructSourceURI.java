@@ -17,17 +17,45 @@ package com.expedia.adaptivealerting.metrics.functions.source.graphite;
 
 import com.expedia.adaptivealerting.metrics.functions.source.MetricFunctionsSpec;
 import com.typesafe.config.Config;
+import lombok.val;
+
+import static com.expedia.adaptivealerting.anomdetect.util.ThreadUtil.sleep;
 
 public class ConstructSourceURI {
+    public static final int MAX_INTERVAL = 60;
     private final String GRAPHITE_URI_KEY = "urlTemplate";
-    private final String GRAPHITE_FROM_TIME_PARAM_STRING = "&from=-";
-    private final String GRAPHITE_TIME_UNIT_STRING = "s";
 
     public String getGraphiteURI(Config metricSourceSinkConfig, MetricFunctionsSpec metricFunctionsSpec) {
-        return metricSourceSinkConfig.getString(GRAPHITE_URI_KEY)
-                + metricFunctionsSpec.getFunction()
-                + GRAPHITE_FROM_TIME_PARAM_STRING
-                + metricFunctionsSpec.getIntervalInSecs() + GRAPHITE_TIME_UNIT_STRING;
+        String graphiteUri = metricSourceSinkConfig.getString(GRAPHITE_URI_KEY);
+        val intervalInSecs = metricFunctionsSpec.getIntervalInSecs();
+        val currentGraphiteEpochSeconds = System.currentTimeMillis() / 1000;
+        val startOfCurrentBin = (currentGraphiteEpochSeconds / intervalInSecs) * intervalInSecs;
+        val startOfPreviousBin = startOfCurrentBin - intervalInSecs;
+        sleepUntilPreviousBinIsFull(intervalInSecs, currentGraphiteEpochSeconds, startOfCurrentBin);
+        return String.format("%s%s&from=%d&until=%d",
+                graphiteUri,
+                metricFunctionsSpec.getFunction(),
+                startOfPreviousBin,
+                startOfCurrentBin-1);
+    }
+
+    /**
+     * We need to give Graphite time to receive all of the metrics for the last bin (where bin equals passage of time intervalInSecs long).
+     * We assume that Graphite is using round numbers for bin intervals.
+     * We wait until enough time has passed since last bin.  Time is considered enough when at least one minute or half of intervalInSecs
+     * (whichever is smaller) has passed since start of current bin.
+     * @param intervalInSecs
+     * @param currentGraphiteEpochSeconds
+     * @param startOfCurrentBin
+     */
+    private void sleepUntilPreviousBinIsFull(int intervalInSecs, long currentGraphiteEpochSeconds, long startOfCurrentBin) {
+        val secondsSinceCurrentBinStarted = currentGraphiteEpochSeconds - startOfCurrentBin;
+        val halfIntervalInSecs = intervalInSecs / 2;
+        val secondsUntilPreviousBinIsFull = Math.min(60, halfIntervalInSecs - secondsSinceCurrentBinStarted);
+        boolean tooSoonSinceLastBin = secondsSinceCurrentBinStarted < secondsUntilPreviousBinIsFull;
+        if (tooSoonSinceLastBin) {
+            sleep(secondsUntilPreviousBinIsFull * 1000);
+        }
     }
 
 }
