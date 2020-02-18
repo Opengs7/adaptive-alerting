@@ -60,6 +60,27 @@ public class GraphiteQueryService {
         }
     }
 
+    private MetricData graphiteMetricData(Config metricSourceSinkConfig, MetricFunctionsSpec metricFunctionsSpec) {
+        String metricQueryResult = queryGraphiteSource(metricSourceSinkConfig, metricFunctionsSpec);
+        GraphiteQueryResult graphiteQueryResult = new GraphiteQueryResult();
+        if (!(EMPTY_RESULT_FROM_SOURCE.equals(metricQueryResult) ||
+                graphiteQueryResult.validateNullDatapoint(metricQueryResult))) {
+            graphiteQueryResult.getGraphiteQueryResultFromJson(metricQueryResult);
+            String graphiteKey = graphiteQueryResult.getTags().get(GRAPHITE_KEY_TAG);
+            HashMap<String, String> tagsBuilder = new HashMap<>();
+            tagsBuilder.putAll(metricFunctionsSpec.getTags());
+            tagsBuilder.putAll(graphiteQueryResult.getTags());
+            TagCollection tags = new TagCollection(tagsBuilder);
+            TagCollection meta = TagCollection.EMPTY;
+            MetricDefinition metricDefinition = new MetricDefinition(graphiteKey, tags, meta);
+            return new MetricData(metricDefinition, graphiteQueryResult.getDatapoint().getValue(),
+                    graphiteQueryResult.getDatapoint().getTimestamp());
+        }
+        else {
+            return defaultMetricData(metricFunctionsSpec);
+        }
+    }
+
     private String queryGraphiteSource(Config metricSourceSinkConfig, MetricFunctionsSpec metricFunctionsSpec) {
         try {
             ConstructSourceURI constructSourceURI = new ConstructSourceURI();
@@ -79,27 +100,6 @@ public class GraphiteQueryService {
         catch(Exception e) {
             log.error("Exception during reading from metric source", e);
             return EMPTY_RESULT_FROM_SOURCE;
-        }
-    }
-
-    private MetricData graphiteMetricData(Config metricSourceSinkConfig, MetricFunctionsSpec metricFunctionsSpec) {
-        String metricQueryResult = queryGraphiteSource(metricSourceSinkConfig, metricFunctionsSpec);
-        GraphiteQueryResult graphiteQueryResult = new GraphiteQueryResult();
-        if (!(EMPTY_RESULT_FROM_SOURCE.equals(metricQueryResult) ||
-                graphiteQueryResult.validateNullDatapoint(metricQueryResult))) {
-            graphiteQueryResult.getGraphiteQueryResultFromJson(metricQueryResult);
-            String graphiteKey = graphiteQueryResult.getTags().get(GRAPHITE_KEY_TAG);
-            HashMap<String, String> tagsBuilder = new HashMap<>();
-            tagsBuilder.putAll(metricFunctionsSpec.getTags());
-            tagsBuilder.putAll(graphiteQueryResult.getTags());
-            TagCollection tags = new TagCollection(tagsBuilder);
-            TagCollection meta = TagCollection.EMPTY;
-            MetricDefinition metricDefinition = new MetricDefinition(graphiteKey, tags, meta);
-            return new MetricData(metricDefinition, graphiteQueryResult.getDatapoint().getValue(),
-                    graphiteQueryResult.getDatapoint().getTimestamp());
-        }
-        else {
-            return defaultMetricData(metricFunctionsSpec);
         }
     }
 

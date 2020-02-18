@@ -19,16 +19,21 @@ import com.expedia.adaptivealerting.metrics.functions.source.MetricFunctionsSpec
 import com.typesafe.config.Config;
 import lombok.val;
 
-import static com.expedia.adaptivealerting.anomdetect.util.ThreadUtil.sleep;
-
 public class ConstructSourceURI {
     private final String GRAPHITE_URI_KEY = "urlTemplate";
 
     public String getGraphiteURI(Config metricSourceSinkConfig, MetricFunctionsSpec metricFunctionsSpec) {
-        return metricSourceSinkConfig.getString(GRAPHITE_URI_KEY)
-                + metricFunctionsSpec.getFunction()
-                + GRAPHITE_FROM_TIME_PARAM_STRING
-                + metricFunctionsSpec.getIntervalInSecs() + GRAPHITE_TIME_UNIT_STRING;
+        String graphiteUri = metricSourceSinkConfig.getString(GRAPHITE_URI_KEY);
+        val intervalInSecs = metricFunctionsSpec.getIntervalInSecs();
+        val currentGraphiteEpochSeconds = System.currentTimeMillis() / 1000;
+        val startOfCurrentInterval = (currentGraphiteEpochSeconds / intervalInSecs) * intervalInSecs;
+        long from = startOfCurrentInterval - 1;
+        long until = startOfCurrentInterval + intervalInSecs;
+        return String.format("%s%s&from=%d&until=%d",
+                graphiteUri,
+                metricFunctionsSpec.getFunction(),
+                from,
+                until);
     }
 
 }
