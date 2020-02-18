@@ -60,27 +60,6 @@ public class GraphiteQueryService {
         }
     }
 
-    private String queryGraphiteSource(Config metricSourceSinkConfig, MetricFunctionsSpec metricFunctionsSpec) {
-        try {
-            ConstructSourceURI constructSourceURI = new ConstructSourceURI();
-            String URI = constructSourceURI.getGraphiteURI(metricSourceSinkConfig, metricFunctionsSpec);
-            Map<String, String> headers = Collections.emptyMap();
-            if (metricSourceSinkConfig.getString(IS_GRAPHITE_SERVER_METRICTANK_KEY).
-                    equals(GRAPHITE_SERVER_METRICTANK)) {
-                /* default metrictank orgId */
-                headers = Collections.singletonMap("x-org-id", "1");
-            }
-            Content graphiteResult = metricFunctionHttpClient.get(URI, headers);
-            if (graphiteResult.asString().equals(GRAPHITE_EMPTY_RESULT)) {
-                return EMPTY_RESULT_FROM_SOURCE;
-            }
-            return graphiteResult.asString();
-        }
-        catch(Exception e) {
-            log.error("Exception during reading from metric source", e);
-            return EMPTY_RESULT_FROM_SOURCE;
-        }
-    }
 
     private MetricData graphiteMetricData(Config metricSourceSinkConfig, MetricFunctionsSpec metricFunctionsSpec) {
         String metricQueryResult = queryGraphiteSource(metricSourceSinkConfig, metricFunctionsSpec);
@@ -100,6 +79,28 @@ public class GraphiteQueryService {
         }
         else {
             return defaultMetricData(metricFunctionsSpec);
+        }
+    }
+
+    private String queryGraphiteSource(Config metricSourceSinkConfig, MetricFunctionsSpec metricFunctionsSpec) {
+        try {
+            ConstructSourceURI constructSourceURI = new ConstructSourceURI();
+            String URI = constructSourceURI.getGraphiteURI(metricSourceSinkConfig, metricFunctionsSpec);
+            Map<String, String> headers = Collections.emptyMap();
+            if (metricSourceSinkConfig.getString(IS_GRAPHITE_SERVER_METRICTANK_KEY).
+                    equals(GRAPHITE_SERVER_METRICTANK)) {
+                /* default metrictank orgId */
+                headers = Collections.singletonMap("x-org-id", "1");
+            }
+            Content graphiteResult = metricFunctionHttpClient.get(URI, headers);
+            if (graphiteResult.asString().equals(GRAPHITE_EMPTY_RESULT)) {
+                return EMPTY_RESULT_FROM_SOURCE;
+            }
+            return graphiteResult.asString();
+        }
+        catch(Exception e) {
+            log.error("Exception during reading from metric source", e);
+            return EMPTY_RESULT_FROM_SOURCE;
         }
     }
 
